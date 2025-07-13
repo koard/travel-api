@@ -6,6 +6,6 @@ from .tax_router import router as tax_router
 
 
 router = APIRouter()
-router.include_router(province_router, prefix="/province", tags=["province"])
-router.include_router(user_router, prefix="/user", tags=["user"])
-router.include_router(tax_router, prefix="/tax", tags=["tax"])
+router.include_router(province_router, prefix="/province", tags=["Provinces"])
+router.include_router(user_router, prefix="/user", tags=["Users"])
+router.include_router(tax_router, prefix="/tax", tags=["Tax"])

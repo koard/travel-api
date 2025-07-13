@@ -29,15 +29,19 @@ class User(UserBase):
     class Config:
         from_attributes = True
 
-class UserCreateWithPassword(BaseModel):
+class UserCreateWithPassword(UserBase):
     email: EmailStr
-    name: str
     password: str
 
 class UserRead(BaseModel):
     id: int
+    full_name: str
     email: EmailStr
-    name: str
+    citizen_id: str
+    phone: str
+    province_id: int
+    created_at: datetime
+    updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True 

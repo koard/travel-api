@@ -1,13 +1,15 @@
 import pytest
-from base import client
 
 
 @pytest.fixture
 def user_data():
     return {
-        "name": "Alice",
+        "full_name": "Alice Test",
+        "citizen_id": "1234567890123",
+        "phone": "0812345678",
+        "province_id": 1,
         "email": "alice@example.com",
-        "password": "123456"
+        "password": "password"
     }
 
 
@@ -16,7 +18,7 @@ async def test_create_user(client, user_data):
     resp = await client.post("/v1/users/", json=user_data)
     assert resp.status_code == 201
     data = resp.json()
-    assert data["name"] == user_data["name"]
+    assert data["full_name"] == user_data["full_name"]
     assert data["email"] == user_data["email"]
     assert "id" in data
 
@@ -44,11 +46,11 @@ async def test_update_user(client, user_data):
     user_id = create_resp.json()["id"]
 
     updated_data = user_data.copy()
-    updated_data["name"] = "Updated Name"
+    updated_data["full_name"] = "Updated Name"
 
     resp = await client.put(f"/v1/users/{user_id}", json=updated_data)
     assert resp.status_code == 200
-    assert resp.json()["name"] == "Updated Name"
+    assert resp.json()["full_name"] == "Updated Name"
 
 
 @pytest.mark.asyncio

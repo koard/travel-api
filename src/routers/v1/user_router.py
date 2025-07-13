@@ -5,6 +5,7 @@ from sqlmodel import select
 from ... import models
 from ...schemas import user_schema
 from src.auth.dependencies import get_current_user
+from src.auth.utils import hash_password
 
 router = APIRouter(prefix="/v1/users", tags=["Users"])
 
@@ -16,13 +17,22 @@ async def get_all_users(session: AsyncSession = Depends(models.get_session)):
     return result.all()
 
 
-@router.post("/", response_model=user_schema.User, status_code=status.HTTP_201_CREATED)
-async def create_user(user: user_schema.UserCreate, session: AsyncSession = Depends(models.get_session)):
-    db_user = models.User.model_validate(user)
+@router.post("/", response_model=user_schema.UserRead, status_code=status.HTTP_201_CREATED)
+async def create_user(user: user_schema.UserCreateWithPassword, session: AsyncSession = Depends(models.get_session)):
+    hashed_password = hash_password(user.password)  
+    db_user = models.User(
+        full_name=user.full_name,
+        citizen_id=user.citizen_id,
+        phone=user.phone,
+        province_id=user.province_id,
+        email=user.email,
+        hashed_password=hashed_password
+    )
     session.add(db_user)
     await session.commit()
     await session.refresh(db_user)
     return db_user
+
 
 
 @router.get("/me")

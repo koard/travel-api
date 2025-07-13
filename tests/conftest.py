@@ -10,9 +10,10 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 import os
 from dotenv import load_dotenv
+import pytest_asyncio
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def engine():
     load_dotenv(dotenv_path=".env.test")
     sql_url = os.getenv("SQLDB_URL")
@@ -29,14 +30,14 @@ async def engine():
     await engine.dispose()
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def session(engine):
     async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     async with async_session() as session:
         yield session
 
 
-@pytest.fixture
+@pytest_asyncio.fixture
 async def client(session):
     async def override_get_session():
         yield session

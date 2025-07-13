@@ -1,3 +1,3 @@
-//bash
-poetry install
-poetry run fastapi dev src/main.py
+#bash
+-poetry install
+-poetry run fastapi dev src/main.py

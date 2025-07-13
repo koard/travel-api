@@ -11,6 +11,8 @@ class UserBase(SQLModel):
     citizen_id: str = Field(unique=True, index=True)
     phone: str
     province_id: int = Field(foreign_key="province.id")
+    email: str = Field(unique=True, index=True) 
+    hashed_password: str                      
 
 
 class User(UserBase, table=True):

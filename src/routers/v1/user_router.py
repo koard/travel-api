@@ -4,6 +4,7 @@ from sqlmodel import select
 
 from ... import models
 from ...schemas import user_schema
+from src.auth.dependencies import get_current_user
 
 router = APIRouter(prefix="/v1/users", tags=["Users"])
 
@@ -22,6 +23,11 @@ async def create_user(user: user_schema.UserCreate, session: AsyncSession = Depe
     await session.commit()
     await session.refresh(db_user)
     return db_user
+
+
+@router.get("/me")
+async def read_user_me(current_user: dict = Depends(get_current_user)):
+    return {"user": current_user}
 
 
 @router.get("/{user_id}", response_model=user_schema.User)

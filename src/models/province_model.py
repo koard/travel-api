@@ -15,5 +15,4 @@ class Province(ProvinceBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
-
-#    users: List["User"] = Relationship(back_populates="province")
+    users: List["User"] = Relationship(back_populates="province")

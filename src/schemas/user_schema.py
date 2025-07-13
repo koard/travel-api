@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class UserBase(BaseModel):
@@ -28,3 +28,16 @@ class User(UserBase):
 
     class Config:
         from_attributes = True
+
+class UserCreateWithPassword(BaseModel):
+    email: EmailStr
+    name: str
+    password: str
+
+class UserRead(BaseModel):
+    id: int
+    email: EmailStr
+    name: str
+
+    class Config:
+        orm_mode = True

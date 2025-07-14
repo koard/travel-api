@@ -17,6 +17,7 @@ poetry run fastapi dev src/main.py
 # Run test
 poetry run pytest tests/test_user.py -v
 poetry run pytest tests/test_province.py -v
+poetry run pytest tests/test_tax.py -v
 
 ```
 

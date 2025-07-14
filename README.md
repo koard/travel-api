@@ -13,6 +13,11 @@ poetry install
 
 # Run development server
 poetry run fastapi dev src/main.py
+
+# Run test
+poetry run pytest tests/test_user.py -v
+poetry run pytest tests/test_province.py -v
+
 ```
 
 - หลังจากรันเซิร์ฟเวอร์แล้ว สามารถเข้าใช้งาน API Docs ได้ที่:
